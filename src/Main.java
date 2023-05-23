@@ -8,34 +8,21 @@
  * 
  * This class serves as a driver for the supporting classes
  */
+
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Program Start");
+		Receipt receipt = new Receipt();
+		IO ioInstant = new IO();
+		GeneralUtil utilInstant = new GeneralUtil();
 
+		ArrayList<String> lines = ioInstant.takeLinesFromIO();
+		ArrayList<Product> products = utilInstant.createProductsFromLines(lines);
+		receipt.addItems(products);
+		ArrayList<String> receiptLines = receipt.fetchReceiptOutputLines();
+		ioInstant.printLines(receiptLines);
 
-		Receipt receipt1 = new Receipt("test_1.txt");	
-		receipt1.calculateTotals();
-		
-		System.out.println("Output 1");
-		receipt1.printReceipt();
-		System.out.println();
-
-		Receipt receipt2 = new Receipt("test_2.txt");
-
-		receipt2.calculateTotals();
-		
-		System.out.println("Output 2");
-		receipt2.printReceipt();
-		System.out.println();
-		
-		Receipt receipt3 = new Receipt("test_3.txt");
-		
-		receipt3.calculateTotals();
-		
-		System.out.println("Output 3");
-		receipt3.printReceipt();
-		
 	}
-
 }

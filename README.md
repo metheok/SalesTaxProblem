@@ -65,10 +65,13 @@ Complile from Main.java and run the compliled code with input files in the root 
 Complile by javac Main.java
 Run by java Main
 
-Input Files:
-input1.txt
-input2.txt
-input3.txt
+Input through console
+
+Enter each item as : {quantity} {name with imported keyword if applicable} at {price}
+
+Each item in above format is written one item in one line
+Press ENTER and go to next line to enter another item
+To end the prompt, go to new line and write end and press ENTER
 
 Assumptions
 The input text file follows the following syntax:
@@ -88,49 +91,70 @@ Main Class
 
 Receipt Class
 
-    ArrayList<Product> productsList
-    double total
-    double taxtotal
+    ArrayList<Product> items
 
     Receipt()
-    calculateTotals()
-    setTotal()
-    getTotal()
-    setSalesTaxTotal()
-    getSalesTaxTotal()
-    containsItemFromArray()
-    round()
-    roundTwoDecimals()
-    printReceipt()
-
-enum ItemType
-
-    BOOK
-    MEDICAL
-    FOOD
-    OTHERS
-    IMPORTED_BOOK
-    IMPORTED_MEDICAL
-    IMPORTED_FOOD
-    IMPORTED_OTHERS
-    isExempted
-    isImported
-
-    ItemType()
-    isImported()
-    isExempted()
+    addItems()
+    fetchReceiptOutputLines()
 
 Product Class
 
     String name
-    float price
-    ItemType type
+    Category category
+    boolean isImported
+    float basePrice
+    int qty
 
-    product()
-    toString()
-    getPrice()
-    setPrice()
-    getName()
-    setName()
-    isSalesTaxable()
-    isImportTaxable()
+
+    Product()
+    createProduct()
+    createProductCategory()
+
+IO Class
+
+    takeLinesFromIO()
+    printLines()
+
+Rounder Class
+
+    TaxCalculator calculator
+
+    Rounder()
+    calculate()
+
+BaseTaxCalculator Class
+
+    Product product
+
+    BaseTaxCalculator()
+    getProduct()
+    calculate()
+
+SalesTaxCalculator Class
+
+    TaxCalculator calculator
+
+    SalesTaxCalculator()
+    getProduct()
+    calculate()
+
+ImportTaxCalculator Class
+
+    TaxCalculator calculator
+
+    ImportTaxCalculator()
+    getProduct()
+    calculate()
+
+SalesTaxCalculator Interface
+
+    calculate()
+    getProduct()
+
+enum Category
+
+    BOOK, FOOD, MEDICAL, OTHER
+
+Product GeneralUtil
+
+    createProductsFromLines()

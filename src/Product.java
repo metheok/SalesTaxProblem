@@ -1,74 +1,55 @@
-/*
- * 
- */
-enum ItemType{
-	BOOK(true,false),
-	MEDICAL(true,false),
-	FOOD(true,false),
-	OTHERS ( false , false),
-	IMPORTED_BOOK(true,true),
-	IMPORTED_MEDICAL(true,true),
-	IMPORTED_FOOD(true,true),
-	IMPORTED_OTHERS(false,true);
-	
-	private boolean isExempted;
-	private boolean isImported;
-	
-	private ItemType(boolean exempted , boolean imported){
-		isExempted = exempted;
-		isImported = imported;
-	}
-
-	public boolean isImported(){
-		return isImported;
-	}
-	public boolean isExempted(){
-		return isExempted;
-	}
-
-}
 
 public class Product {
-	private String name;
-	private float price;
-	private ItemType type;
-	
-	public Product(String name, float price, ItemType itemType){
-		this.setProduct(name, price, itemType);
-	}
-	
-	public String toString(){
-		return this.name + this.getPrice();
-	}
-	public boolean isSalesTaxable() {
-		return !this.type.isExempted();
-	}
+	public final String name;
+	public final Category category;
+	public final boolean isImported;
+	public final float basePrice;
+	public final int qty;
 
-	public boolean isImportedTaxable() {
-		return this.type.isImported();
-	}
-
-
-
-
-	public void setProduct(String name, float price, ItemType type){
-		this.type = type;
+	public Product(String name, Category category, boolean isImported, float basePrice, int qty) {
 		this.name = name;
-		this.price = price;
-	}
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price){
-		this.price = price;
+		this.category = category;
+		this.qty = qty;
+		this.isImported = isImported;
+		this.basePrice = basePrice;
 	}
 
-	public String getName() {
-		return name;
+	public Product createProduct(String line) {
+
+		String[] words = line.split(" "); // divide the line
+
+		int qty = Integer.parseInt(words[0]); // first word is the quantity
+		boolean isImported = line.contains("imported"); // check if the item is imported
+		Category category = createProductCategory(line);
+		int splitIndex = line.lastIndexOf("at");
+
+		if (splitIndex == -1) {
+
+			System.out.println("Bad Formatting");
+			return new Product(null, null, false, 0, 0);
+
+		}
+		float price = Float.parseFloat((line.substring(splitIndex + 2))); // the price is the token after the substring
+
+		System.out.println(price); // "at"
+
+		String name = line.substring(1, splitIndex); // the name is everything between the qty and at
+
+		Product prod = new Product(name, category, isImported, price, qty);
+
+		return prod;
 	}
 
-
-	
-
+	private Category createProductCategory(String line) {
+		if (line.contains("book")) {
+			return Category.BOOK;
+		}
+		if (line.contains("chocolate") || line.contains("food")) {
+			return Category.FOOD;
+		}
+		if (line.contains("pill") || line.contains("medicine")) {
+			return Category.MEDICAL;
+		}
+		return Category.OTHER;
+	}
 }
