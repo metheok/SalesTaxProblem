@@ -55,7 +55,7 @@ Sales Taxes: 6.70
 Total: 74.68
 
 Introduction
-This program is written by Omar Iqbal Kantroo as Makkajai sample problem
+This program is written by Omar Iqbal Kantroo 
 
 How to Run
 
